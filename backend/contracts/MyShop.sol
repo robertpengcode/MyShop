@@ -40,6 +40,8 @@ contract MyShop is Ownable, ReentrancyGuard, Pausable {
         uint256 price,
         address indexed customer
     );
+    event PostedExpense(uint256 indexed expenseId, uint256 amount);
+    event ClosedOutExpenses(address indexed owner);
     event OwnerWithdrew(address indexed owner, uint256 amount);
 
     error MyShop__WrongPaymentAmount();
@@ -95,6 +97,7 @@ contract MyShop is Ownable, ReentrancyGuard, Pausable {
 
     function postExpense(uint256 expenseId, uint256 amount) external onlyOwner {
         expenses[expenseId].cost += amount;
+        emit PostedExpense(expenseId, amount);
     }
 
     function closeOutExpenses() external onlyOwner {
@@ -102,6 +105,7 @@ contract MyShop is Ownable, ReentrancyGuard, Pausable {
         for (uint256 id = 0; id < lengthOfExpenses; id++) {
             expenses[id].cost = 0;
         }
+        emit ClosedOutExpenses(msg.sender);
     }
 
     function getInventoryQTY(uint256 productId) public view returns (uint256) {
