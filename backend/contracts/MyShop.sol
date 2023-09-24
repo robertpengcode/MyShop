@@ -6,8 +6,8 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 
 contract MyShop is Ownable, ReentrancyGuard, Pausable {
-    uint256 nextProductId;
-    uint256 nextExpenseId;
+    uint256 public nextProductId;
+    uint256 public nextExpenseId;
 
     struct Product {
         string name;
